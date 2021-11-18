@@ -3,12 +3,12 @@
     "description": "Julie Mwol is the Modified Version of WhatsAsena, Made By @farhan-dqz with Baileys.",
     "logo": "https://i.imgur.com/ADXSU8e.jpeg",
     "keywords": ["whatsapp", "userbot", "julie", "WhatsAsena", "mwol", "bot", "ai"],
-    "repository": "https://github.com/stefani3/Julie-Mwol",
-    "website":   "https://github.com/stefani3/Julie-Mwol",
-    "success_url": "https://github.com/stefani3/Julie-Mwol",
+    "repository": "https://github.com/stefani3/stefanie-",
+    "website":   "https://github.com/stefani3/stefanie-",
+    "success_url": "https://github.com/stefani3/stefanie-",
     "stack": "container",
     "env": {
-        "JULIE_SESSION": {
+        "STEFANIE_SESSION": {
             "description": "Type here yours Asena Session.",
             "required": true
         },
