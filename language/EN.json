@@ -221,9 +221,9 @@
             "MUST_TEXT": "```Please reply to any message```"
         },
         "heroku": {
-            "RESTART_DESC": "Restart Julie",
+            "RESTART_DESC": "Restart stefanie",
             "RESTART_MSG": "```Restarting...```",
-            "SHUTDOWN_DESC": "Shutdown Julie",
+            "SHUTDOWN_DESC": "Shutdown stefanie",
             "SHUTDOWN_MSG": "```Shutting down ⛔```",
             "DYNO_DESC": "Check heroku dyno usage",
             "DYNO_TOTAL": "```Total Quota```",
