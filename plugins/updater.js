@@ -3,12 +3,12 @@
 Licensed under the  GPL-3.0 License;
 you may not use this file except in compliance with the License.
 
-WhatsJulie - Yusuf Usta
+WhatsAsena - Yusuf Usta
 */
 
 const simpleGit = require('simple-git');
 const git = simpleGit();
-const Julie = require('../events');
+const Asena = require('../events');
 const {MessageType} = require('@adiwajshing/baileys');
 const Config = require('../config');
 const exec = require('child_process').exec;
@@ -20,7 +20,7 @@ const Language = require('../language');
 const Lang = Language.getString('updater');
 
 
-Julie.addCommand({pattern: 'update$', fromMe: true, desc: Lang.UPDATER_DESC}, (async (message, match) => {
+Asena.addCommand({pattern: 'update$', fromMe: true, desc: Lang.UPDATER_DESC}, (async (message, match) => {
     await git.fetch();
     var commits = await git.log([Config.BRANCH + '..origin/' + Config.BRANCH]);
     if (commits.total === 0) {
@@ -32,7 +32,7 @@ Julie.addCommand({pattern: 'update$', fromMe: true, desc: Lang.UPDATER_DESC}, (a
         var degisiklikler = Lang.NEW_UPDATE;
         commits['all'].map(
             (commit) => {
-                degisiklikler += '🔹 [' + commit.date.substring(0, 10) + ']: ' + commit.message + ' <' + commit.author_name + '>\n';
+                degisiklikler += '♻ [' + commit.date.substring(0, 10) + ']: ' + commit.message + ' <' + commit.author_name + '>\n';
             }
         );
         
@@ -43,7 +43,7 @@ Julie.addCommand({pattern: 'update$', fromMe: true, desc: Lang.UPDATER_DESC}, (a
     }
 }));
 
-Julie.addCommand({pattern: 'update now$', fromMe: true, desc: Lang.UPDATE_NOW_DESC}, (async (message, match) => {
+Asena.addCommand({pattern: 'update now$', fromMe: true, desc: Lang.UPDATE_NOW_DESC}, (async (message, match) => {
     await git.fetch();
     var commits = await git.log([Config.BRANCH + '..origin/' + Config.BRANCH]);
     if (commits.total === 0) {
