@@ -1,100 +1,86 @@
-/* Copyright (C) 2020 Yusuf Usta.
-Licensed under the  GPL-3.0 License;
-you may not use this file except in compliance with the License.
-WhatsJulie - Yusuf Usta
-*/
+const Asena = require('../events');
+const Config = require('../config');
+const {MessageType} = require('@adiwajshing/baileys');
+const got = require('got');
 
-const Julie = require('../events');
-const config = require('../config');
-const Heroku = require('heroku-client');
-const heroku = new Heroku({
-    token: config.HEROKU.API_KEY
-});
-let baseURI = '/apps/' + config.HEROKU.APP_NAME;
+// List
+const IPSTATUS_DESC = "It Sends Your IP details"
+const NEED_IP = "*Enter Your IP Address..!*"
+const IP = "IP :"
+const ST = "STATUS :"
+const CONTINENT = "CONTINENT :"
+const COUNTRY = "COUNTRY :"
+const COUNTRYCODE = "COUNTRYCODE :"
+const REGIONNAME = "REGIONNAME :"
+const CITY = "CITY :"
+const ZIP = "ZIP :"
+const CURRENCY = "CURRENCY :"
+const ISP = "ISP :"
+const MOBILE = "MOBILE :"
+const PROXY = "PROXY :"
+const NOT_FOUNDIP = "```Sorry,I could not your IP 😖```"
 
-   var l_dsc = ''
-    var alr_on = ''
-    var alr_off = ''
-    var succ_on = ''
-    var succ_off = ''
-    if (config.LANG == 'TR') {
-        l_dsc = 'Antilink aracını etkinleştirir.'
-        alr_on = 'Antilink halihazırda açık!'
-        alr_off = 'Antilink halihazırda kapalı!'
-        succ_on = 'Antilink Başarıyla Açıldı!'
-        succ_off = 'Antilink Başarıyla Kapatıldı!'
-    }
-    if (config.LANG == 'EN') {
-        l_dsc = 'Activates the Antilink tool.'
-        alr_on = 'Antilink is already open!'
-        alr_off = 'Antilink is currently closed!'
-        succ_on = 'Antilink Opened Successfully!'
-        succ_off = 'Antilink Closed Successfully!'
-    }
-    if (config.LANG == 'AZ') {
-        l_dsc = 'Antilink alətini aktivləşdirir.'
-        alr_on = 'Antilink hazırda açıqdır!'
-        alr_off = 'Antilink hazırda bağlıdır!'
-        succ_on = '*Antilink Uğurla Açıldı!*'
-        succ_off = '*Antilink Uğurla Bağlandı!*'
-    }
-    if (config.LANG == 'HI') {
-        l_dsc = 'एंटीलिंक टूल को सक्रिय करता है।'
-        alr_on = 'एंटीलिंक पहले से ही खुला है!'
-        alr_off = 'एंटीलिंक वर्तमान में बंद है!'
-        succ_on = 'एंटीलिंक सफलतापूर्वक खोला गया!'
-        succ_off = 'एंटीलिंक सफलतापूर्वक बंद!'
-    }
-    if (config.LANG == 'ML') {
-        l_dsc = 'ആന്റിലിങ്ക് ഉപകരണം സജീവമാക്കുന്നു.'
-        alr_on = 'ആന്റിലിങ്ക് ഇതിനകം തുറന്നു!'
-        alr_off = 'ആന്റിലിങ്ക് നിലവിൽ അടച്ചിരിക്കുന്നു!'
-        succ_on = 'ആന്റിലിങ്ക് വിജയകരമായി തുറന്നു!'
-        succ_off = 'ആന്റിലിങ്ക് വിജയകരമായി അടച്ചു!'
-    }
-    if (config.LANG == 'PT') {
-        l_dsc = 'Ativa a ferramenta Antilink.'
-        alr_on = 'O Antilink já está aberto!'
-        alr_off = 'Antilink está fechado no momento!'
-        succ_on = 'Antilink aberto com sucesso!'
-        succ_off = 'Antilink fechado com sucesso!'
-    }
-    if (config.LANG == 'RU') {
-        l_dsc = 'Активирует инструмент Antilink.'
-        alr_on = 'Антилинк уже открыт!'
-        alr_off = 'Антилинк сейчас закрыт!'
-        succ_on = 'Антилинк успешно открыт!'
-        succ_off = 'Антилинк успешно закрыт!'
-    }
-    if (config.LANG == 'ES') {
-        l_dsc = 'Activa la herramienta Antilink.'
-        alr_on = '¡Antilink ya está abierto!'
-        alr_off = '¡Antilink está cerrado actualmente!'
-        succ_on = '¡Antilink se abrió con éxito!'
-        succ_off = 'Antilink cerrado correctamente!'
-    }
-    if (config.LANG == 'ID') {
-        l_dsc = 'Mengaktifkan alat Antilink.'
-        alr_on = 'Antilink sudah terbuka!'
-        alr_off = 'Antilink saat ini ditutup!'
-        succ_on = 'Antilink Berhasil Dibuka!'
-        succ_off = 'Antilink Berhasil Ditutup!'
-    }
-    Julie.addCommand({pattern: 'antilink ?(.*)', fromMe: true, desc: l_dsc, usage: '.antilink on / off' }, (async (message, match) => {
-        if (match[1] == 'off') {
-                await heroku.patch(baseURI + '/config-vars', { 
-                    body: { 
-                        ['ANTİ_LİNK']: 'false'
-                    } 
-                });
-                await message.sendMessage(succ_off)
-        } else if (match[1] == 'on') {
-                await heroku.patch(baseURI + '/config-vars', { 
-                    body: { 
-                        ['ANTİ_LİNK']: 'true'
-                    } 
-                });
-                await message.sendMessage(succ_on)
-        }
-    }));
+if (Config.WORKTYPE == 'private') {
 
+  Asena.addCommand({pattern: 'ip ?(.*)', desc: 'gives you the detail of your IP' ,fromMe: true}, async (message, match) => {
+	
+    if (message.jid === '905524317852-1612300121@g.us') {
+
+                return;
+            }
+    
+    if (match[1] === '') return await message.reply(NEED_IP);
+	const url = `https://api.techniknews.net/ipgeo/${match[1]}`;
+	try {
+		const response = await got(url);
+		const ipjson = JSON.parse(response.body);
+		if (response.statusCode === 200) return await message.client.sendMessage(message.jid, '*🔴 ' + IP +'* ```' + match[1] + '```\n\n' +
+		'*✅' + ST +'* ```' + ipjson.status+ '```\n' +
+        '*🌐' + CONTINENT +'* ```' + ipjson.continent+ '```\n' +
+        '*🗺' + COUNTRY +'* ```' + ipjson.country+ '```\n' +
+        '*🔢' + COUNTRYCODE +'* ```' + ipjson.countryCode+ '```\n' +
+        '*🌍' + REGIONNAME +'* ```' + ipjson.regionName+ '```\n' +
+        '*🚩' + CITY +'* ```' + ipjson.city+ '```\n' +
+        '*🏛' + ZIP +'* ```' + ipjson.zip+ '```\n' +
+        '*💸' + CURRENCY +'* ```' + ipjson.currency+ '```\n\n' +
+        '*📡' + ISP +'* ```' + ipjson.isp+ '```\n' +
+        '*🛡' + PROXY +'* ```' + ipjson.proxy+ '```\n' +
+        '*📱' + MOBILE +'* ```' + ipjson.mobile+ '```\n', MessageType.text);
+	} 
+    catch {
+		return await message.client.sendMessage(message.jid, NOT_FOUNDIP, MessageType.text);
+	}
+ });
+}	
+else if (Config.WORKTYPE == 'public') {
+
+  Asena.addCommand({pattern: 'ip ?(.*)', desc: 'gives you the detail of your IP' ,fromMe: false}, async (message, match) => {
+	
+    if (message.jid === '905524317852-1612300121@g.us') {
+
+                return;
+            }
+    
+    if (match[1] === '') return await message.reply(NEED_IP);
+	const url = `https://api.techniknews.net/ipgeo/${match[1]}`;
+	try {
+		const response = await got(url);
+		const ipjson = JSON.parse(response.body);
+		if (response.statusCode === 200) return await message.client.sendMessage(message.jid, '*🔴 ' + IP +'* ```' + match[1] + '```\n\n' +
+		'*✅' + ST +'* ```' + ipjson.status+ '```\n' +
+        '*🌐' + CONTINENT +'* ```' + ipjson.continent+ '```\n' +
+        '*🗺' + COUNTRY +'* ```' + ipjson.country+ '```\n' +
+        '*🔢' + COUNTRYCODE +'* ```' + ipjson.countryCode+ '```\n' +
+        '*🌍' + REGIONNAME +'* ```' + ipjson.regionName+ '```\n' +
+        '*🚩' + CITY +'* ```' + ipjson.city+ '```\n' +
+        '*🏛' + ZIP +'* ```' + ipjson.zip+ '```\n' +
+        '*💸' + CURRENCY +'* ```' + ipjson.currency+ '```\n\n' +
+        '*📡' + ISP +'* ```' + ipjson.isp+ '```\n' +
+        '*🛡' + PROXY +'* ```' + ipjson.proxy+ '```\n' +
+        '*📱' + MOBILE +'* ```' + ipjson.mobile+ '```\n', MessageType.text);
+	} 
+    catch {
+		return await message.client.sendMessage(message.jid, NOT_FOUNDIP, MessageType.text);
+	}
+ });
+}
