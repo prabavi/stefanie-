@@ -47,7 +47,7 @@ By establishing the Asena, you are deemed to have accepted these responsibilitie
   
 [![Run on Repl.it](https://repl.it/badge/github/quiec/stefanie)](https://replit.com/@Kaweeshachamodk/STEFANIE-BETA-NEW-6?v=1)
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/Kaweeshachamodk/stefanie)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/stefani3/stefanie-)
      </div>
 
 > ![Sinhala Youtube Tutorial](https://telegra.ph/file/c32d74b7afc8ffe2e7fef.png) (https://youtu.be/GNSARiAUfKA)
